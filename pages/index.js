@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 
-export default function Home() {
-  const [movies, setMovies] = useState()
+export default function Home({ movies }) {
+  //   const [movies, setMovies] = useState()
 
-  useEffect(() => {
-    ;(async () => {
-      const { results } = await (await fetch('/api/movies')).json()
-      setMovies(results)
-    })()
-  }, [])
+  //   useEffect(() => {
+  //     ;(async () => {
+  //       const { results } = await (await fetch('/api/movies')).json()
+  //       setMovies(results)
+  //     })()
+  //   }, [])
 
   return (
     <div className="container">
@@ -45,4 +45,11 @@ export default function Home() {
       `}</style>
     </div>
   )
+}
+
+export async function getServerSideProps() {
+  const { results: movies } = await (await fetch('http://localhost:3000/api/movies')).json()
+  return {
+    props: { movies },
+  }
 }

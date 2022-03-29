@@ -10,7 +10,7 @@ const pathTitles = {
 
 export default function App({ Component, pageProps }) {
   const router = useRouter()
-  console.log('a', router)
+  console.log('_app.js', pageProps)
   return (
     <>
       <Seo title={pathTitles[router.pathname]} />
