@@ -1,6 +1,8 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-export default function Home({ movies }) {
+export default function MovieList({ movies }) {
   //   const [movies, setMovies] = useState()
 
   //   useEffect(() => {
@@ -10,16 +12,34 @@ export default function Home({ movies }) {
   //     })()
   //   }, [])
 
+  const router = useRouter()
+
+  const onClick = (id, title) => {
+    router.push(
+      {
+        pathname: `/movies/${id}`,
+        query: {
+          title,
+        },
+      },
+      `/movies/${id}`,
+    )
+  }
+
   return (
     <div className="container">
       {!movies ? (
         <h4>Loading...</h4>
       ) : (
-        movies.map((cur) => (
-          <div key={cur.id} className="movie">
-            <img src={`https://image.tmdb.org/t/p/w500/${cur.poster_path}`} />
-            <h4>{cur.original_title}</h4>
+        movies.map((movie) => (
+          <div key={movie.id} onClick={() => onClick(movie.id, movie.original_title)} className="movie">
+            <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+            <h4>{movie.original_title}</h4>
           </div>
+          //   <Link href={`/movies/${movie.id}`} key={movie.id}>
+          //     <a>
+          //     </a>
+          //   </Link>
         ))
       )}
       <style jsx>{`
